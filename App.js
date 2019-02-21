@@ -42,7 +42,7 @@ export default class App extends React.Component {
         const {
           action, year, month, day,
         } = await DatePickerAndroid.open({
-        date: new Date().toDateString(),
+        date: new Date(),
         });
         if (action !== DatePickerAndroid.dismissedAction) {
           this.setState({ date: `${day}/${month + 1}/${year}` });
@@ -53,11 +53,20 @@ export default class App extends React.Component {
     };
     
     handleSubmit(){
+      var image=[]
+      if(this.state.image1!=null){
+        image.push(this.state.image1);
+      }
+      if(this.state.image2!=null){
+        image.push(this.state.image2);
+      }
+
       MailComposer.composeAsync({
         recipients: ['an_t_h_le@yahoo.com'],
         subject: 'Attachment Test',
         body: 'Testing multiple Attachments',
-        attachments: [this.state.image1, this.state.image2]
+       
+        attachments: image
     })
      
     }
@@ -118,7 +127,7 @@ export default class App extends React.Component {
                 label="Date"
                 value={this.state.date}             
             />
-            <Ionicons name="calendar" size={32} onPress={() => this.setDateAndroid()}/>
+            <Ionicons name="md-calendar" size={32} onPress={() => this.setDateAndroid()}/>
           </CardSection>
           <View style={styles.containerStyle}>
             <Text style={styles.label}>Description (What, When, Where, how)</Text>
